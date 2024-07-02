@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:movie_app/utils/text.dart';
 import 'package:movie_app/widgets/toprated.dart';
 import 'package:movie_app/widgets/trending.dart';
 import 'package:movie_app/widgets/tv.dart';
 import 'package:tmdb_api/tmdb_api.dart';
 
-void main() => runApp(const MyApp());
+void main() async {
+  await dotenv.load(fileName: ".env");
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -33,13 +37,12 @@ class _HomeState extends State<Home> {
   List tv = [];
 
   //Api Key Data
-  final String apikey = 'a5c4fd180fbf11d9282cfa029872ac8c';
-  final readAccessToken =
-      'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhNWM0ZmQxODBmYmYxMWQ5MjgyY2ZhMDI5ODcyYWM4YyIsInN1YiI6IjY1OWE4NTlkMjE2MjFkMDIwMjM1N2VlZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.MEhfZHVae61xpf1uYq2Q0Ew8dxVxXAGKjZKMSX3VEts';
-
+  final String apikey = dotenv.env['API_KEY']!;
+  final readAccessToken = dotenv.env['READ_ACCESS_TOKEN']!;
   @override
   void initState() {
     loadMovies();
+    print(dotenv.env['API_KEY']);
     super.initState();
   }
 
